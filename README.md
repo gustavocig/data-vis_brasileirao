@@ -11,8 +11,10 @@ but specified for the state in question.
 ## Branch Names
 
 Each branch should be named after the feature/issue it solves.
-For example: "feature-#X_(description)" or "issue-#X_(description)"
+For example: 
+"feature-#X_(description)" or "issue-#X_(description)"
 Where X is the number of the solved issue
 
 In case there is no issue associated to the commit, simply remove the issue number from the commit.
-For example: "feature-(description)"
+For example: 
+"feature-(description)"
