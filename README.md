@@ -1,4 +1,4 @@
-﻿## Data Visualization of Brasileirão Championship
+## Data Visualization of Brasileirão Championship
 
 Project consists in a map centralized over Brazil, where the user can select
 various different filters based in many metrics related to the Brasileirão Championship
