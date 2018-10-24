@@ -23,7 +23,11 @@ h2 span {
     position: relative;
 }
 
-#mapid {
-    width: 650px;
-    height: 450px;
+#map {
+    width: 750px;
+    height: 590px;
+}
+
+.center {
+    margin: auto;
 }
