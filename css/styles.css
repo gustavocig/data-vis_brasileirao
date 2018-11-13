@@ -1,5 +1,5 @@
 body {
-    padding-top: 50px;
+    padding: 5px 10px;
     font-family: "helvetica"
 }
 
@@ -23,11 +23,27 @@ h2 span {
     position: relative;
 }
 
-#map {
-    width: 750px;
-    height: 590px;
+#map, #analysis-port {
+    width: 49vw;
+    height: 92vh;
 }
 
 .center {
     margin: auto;
+}
+
+.center-text {
+    text-align: center;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.top {
+    vertical-align: text-top;
 }
