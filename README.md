@@ -1,3 +1,5 @@
+### Github Pages: [https://gustavocig.github.io/data-vis_brasileirao/](https://gustavocig.github.io/data-vis_brasileirao/)
+
 ## Data Visualization of Brasileirão Championship
 
 Project consists in a map centralized over Brazil, where the user can select
