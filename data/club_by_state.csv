@@ -1,6 +1,6 @@
 "estado_id","estado_nome","id","nome","abreviacao","slug"
 "RJ","Rio de Janeiro",262,"Flamengo","FLA","flamengo"
-"RJ","Rio de Janeiro"263,"Botafogo","BOT","botafogo"
+"RJ","Rio de Janeiro",263,"Botafogo","BOT","botafogo"
 "SP","São Paulo",264,"Corinthians","COR","corinthians"
 "BA","Bahia",265,"Bahia","BAH","bahia"
 "RJ","Rio de Janeiro",266,"Fluminense","FLU","fluminense"
