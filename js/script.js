@@ -92,13 +92,9 @@ function create_goals_bar_chart(html_tag, width, height, y_dimension, group, tea
 }
 
 
-<<<<<<< HEAD
-function create_standings_series_chart(){
-	let standing_line_chart = dc.seriesChart("#standingsChart");
-=======
+
 function standings_series_chart(html_tag, dataset, width=768, height=480){
 	let standing_line_chart = dc.seriesChart("#" + html_tag);
->>>>>>> f7cf10e5f4ebb61d26980d70e05864aa1f3849b0
 
     let ndx, runDimension, runGroup;
 
