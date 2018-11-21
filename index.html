@@ -35,15 +35,19 @@
             <div class="chart" id="standingsChart">
                 <h3 class="left">Posição por Rodada</h3>
             </div>
+            <div class="chart" id="goalsChart">
+                <h3 class="left">Gols por time</h3>
+            </div>
         </div>
         <script type="text/javascript">
             const VIEWPORT_WIDTH = document.getElementById('analysis-port').offsetWidth;
             const VIEWPORT_HEIGHT = document.getElementById('analysis-port').offsetHeight;
-            const CENTRALIZED_COORDINATES = [-54, -14.8267]
+            const CENTRALIZED_COORDINATES = [-54, -14.8267];
             const MAP_ZOOM = 4.4;
 
             let br_states_data = 'data/br-states.json';
             let standing_chart_dataset = 'data/position_by_round_team_id.csv';
+            let club_goals_dataset = "data/total_goals_per_team.csv";
 
             map = create_map('map', CENTRALIZED_COORDINATES[1],
                 CENTRALIZED_COORDINATES[0], MAP_ZOOM);
@@ -51,6 +55,8 @@
 
             standings_series_chart('standingsChart', standing_chart_dataset,
                 VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+            goals_bar_chart('goalsChart', club_goals_dataset, VIEWPORT_WIDTH,
+                VIEWPORT_HEIGHT);
         </script>
     </body>
 </html>
