@@ -92,42 +92,45 @@ function create_goals_bar_chart(html_tag, width, height, y_dimension, group, tea
 }
 
 
+<<<<<<< HEAD
 function create_standings_series_chart(){
 	let standing_line_chart = dc.seriesChart("#standingsChart");
+=======
+function standings_series_chart(html_tag, dataset, width=768, height=480){
+	let standing_line_chart = dc.seriesChart("#" + html_tag);
+>>>>>>> f7cf10e5f4ebb61d26980d70e05864aa1f3849b0
 
-            let ndx, runDimension, runGroup;
+    let ndx, runDimension, runGroup;
 
-            d3.csv("data/position_by_round_team_id.csv").then(function(experiments) {
+        d3.csv("data/" + dataset).then(function(experiments) {
 
-                ndx = crossfilter(experiments);
-                runDimension = ndx.dimension(function(d) {return [+d.clube_id, +d.rodada_id]; });
-                runGroup = runDimension.group().reduceSum(function(d) { return +d.posicao; });
+            ndx = crossfilter(experiments);
+            runDimension = ndx.dimension(function(d) {return [+d.clube_id, +d.rodada_id]; });
+            runGroup = runDimension.group().reduceSum(function(d) { return +d.posicao; });
 
-                standing_line_chart
-                    .width(768)
-                    .height(480)
-                    .chart(function(c) { return dc.lineChart(c).curve(d3.curveCardinal); })
-                    .x(d3.scaleLinear().domain([1,20]))
-                    .y(d3.scaleLinear().range([20,1]))
-                    .brushOn(false)
-                    .yAxisLabel("Posicao")
-                    .xAxisLabel("Rodada")
-                    .clipPadding(10)
-                    .elasticY(true)
-                    .dimension(runDimension)
-                    .group(runGroup)
-                    .mouseZoomable(true)
-                    .seriesAccessor(function(d) {return "Expt: " + d.key[0];})
-                    .keyAccessor(function(d) {return +d.key[1];})
-                    .valueAccessor(function(d) {return +d.value;});
-                    //.legend(dc.legend().x(350).y(350).itemHeight(13).gap(5).horizontal(1).legendWidth(140).itemWidth(70))
+            standing_line_chart
+                .width(width)
+                .height(height)
+                .chart(function(c) { return dc.lineChart(c).curve(d3.curveCardinal); })
+                .x(d3.scaleLinear().domain([1,20]))
+                .y(d3.scaleLinear().range([20,1]))
+                .brushOn(false)
+                .yAxisLabel("Posicao")
+                .xAxisLabel("Rodada")
+                .clipPadding(10)
+                .elasticY(true)
+                .dimension(runDimension)
+                .group(runGroup)
+                .mouseZoomable(true)
+                .seriesAccessor(function(d) {return "Expt: " + d.key[0];})
+                .keyAccessor(function(d) {return +d.key[1];})
+                .valueAccessor(function(d) {return +d.value;});
+                //.legend(dc.legend().x(350).y(350).itemHeight(13).gap(5).horizontal(1).legendWidth(140).itemWidth(70))
+                //standing_line_chart.yAxis().tickFormat(function(d) {return d3.format(',d')(d+299500);});
                  
-                  //standing_line_chart.yAxis().tickFormat(function(d) {return d3.format(',d')(d+299500);});
-                 
-                  standing_line_chart.margins().left += 40;
-                  standing_line_chart.ordering(function(d) { return -d.value; });
+                standing_line_chart.margins().left += 40;
+                standing_line_chart.ordering(function(d) { return -d.value; });
 
-                  dc.renderAll();
-                  });
-        return standing_line_chart;
+                standing_line_chart.render();
+        });
 }
