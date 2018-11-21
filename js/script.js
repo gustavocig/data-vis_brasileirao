@@ -52,7 +52,7 @@ function onEachFeature(feature, layer) {
 function select_state(element) {
     current_state = element.target
     state_is_selected = current_state.options.fillColor == 'red'
-    state_is_selected ? current_state.setStyle(default_style) : current_state.setStyle(selected_style)
+    state_is_selected ? current_state.setStyle(state_default_style) : current_state.setStyle(state_selected_style)
 }
 
 function standings_series_chart(html_tag, dataset, width, height){
