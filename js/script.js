@@ -34,7 +34,7 @@ function superimpose_geojson(dataset, map) {
 }
 
 // Test pending
-function create_standings_series_chart(html_tag, width, height, y_dimension, group, data){
+/*function create_standings_series_chart(html_tag, width, height, y_dimension, group, data){
 	let standing_line_chart = dc.seriesChart(html_tag);
 
 	standing_line_chart.width(width)
@@ -56,22 +56,41 @@ function create_standings_series_chart(html_tag, width, height, y_dimension, gro
 
 	return standing_line_chart;
 }
-
+*/
 // Test pending
 function create_goals_bar_chart(html_tag, width, height, y_dimension, group, teams_ordered, data){
-	let goals_bar_chart = dc.barChart(html_tag);
+            let goals_bar_chart = dc.barChart('#goalsChart');
 
-	goals_bar_chart.width(width)
-	                .height(height)
-	                .margins({top: 20, right: 50, bottom: 20, left: 40})
-	            	.x(d3.scaleOrdinal().domain(teams_ordered))
-	                .xUnits(dc.units.ordinal)
-	                .barPadding(0.4)
-	                .dimension(y_dimension)
-	                .group(group)
+             d3.csv("data/total_goals_per_team.csv").then(function (data) {
+                data.forEach(function(d){
+                    d.goals = +d.total_gols;
+                    d.team  = +d.clube_id;
+                });
+
+                let facts = crossfilter(data);
+                
+                let teamDimension       = facts.dimension(d => d.team);
+              
+                let teamGroup       = teamDimension.group().reduceSum(d => d.goals);
+                    
+                let teamOrdered = teamGroup.top(Infinity).map(d => d.key);
+                
+                barChart.width(600)
+                    .height(400)
+                    .margins({top: 20, right: 50, bottom: 20, left: 40})
+                    .x(d3.scaleOrdinal().domain(teamOrdered))
+                    .xUnits(dc.units.ordinal)
+                    .barPadding(0.4)
+                    .dimension(teamDimension)
+                    .group(teamGroup)
+
+                dc.renderAll();
+
+                });
 
 	return goals_bar_chart;
 }
+
 
 
 function standings_series_chart(html_tag, dataset, width=768, height=480){
