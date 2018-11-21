@@ -1,3 +1,14 @@
+let state_default_style = {
+    fillColor: null,
+    weight: '3'
+}
+
+let state_selected_style = {
+    fillColor: 'red',
+    weight: '5' 
+}
+
+
 function create_map(html_tag, lat, long, magnification, options) {
     let options_is_set = typeof options != 'undefined'
                         && options != null
@@ -17,71 +28,39 @@ function create_map(html_tag, lat, long, magnification, options) {
 }
 
 function superimpose_geojson(dataset, map) {
-    d3.json('data/br-states.json').then(function(geojson) {
+    d3.json(dataset).then(function(geojson) {
         features = topojson.feature(geojson, geojson.objects.estados).features
         L.geoJson(features, {
-            onEachFeature: function(feature, layer) {
-                if (feature.properties && feature.properties.nome) {
-                    layer.bindPopup(feature.properties.nome, {
-                        closeButton: false, offset: L.point(0, -20)
-                    });
-                    layer.on('mouseover', () => layer.openPopup());
-                    layer.on('mouseout', () => layer.closePopup());
-                }
-            }
+            onEachFeature: onEachFeature
         }).addTo(map);
     });
 }
 
-// Test pending
-function create_standings_series_chart(html_tag, width, height, y_dimension, group, data){
-	let standing_line_chart = dc.seriesChart(html_tag);
-
-	standing_line_chart
-        .width(width)
-		.height(height)
-		.chart(function(c) { return dc.lineChart(c).curve(d3.curveCardinal); })
-		.x(d3.scaleLinear().domain([1,38]))
-		.brushOn(false)
-		.yAxisLabel("Posição")
-		.xAxisLabel("Rodada")
-		.clipPadding(10)
-		.elasticY(true)
-		.dimension(y_dimension)
-		.group(group)
-		.mouseZoomable(true)
-		.seriesAccessor(function(d) {return d.key[0];})
-		.keyAccessor(function(d) {return +d.key[1];})
-		.valueAccessor(function(d) {return +d.value;})
-		.legend(dc.legend().x(700).y(5).itemHeight(13).gap(5));
-
-	return standing_line_chart;
+function onEachFeature(feature, layer) {
+    if (feature.properties && feature.properties.nome) {
+        layer.bindPopup(feature.properties.nome, {
+            closeButton: false, offset: L.point(0, -20)
+        });
+        layer.on({
+            mouseover: () => layer.openPopup(),
+            mouseout: () => layer.closePopup(),
+            click: select_state
+        });
+    }
 }
 
-// Test pending
-function create_goals_bar_chart(html_tag, width, height, y_dimension, group, teams_ordered, data){
-	let goals_bar_chart = dc.barChart(html_tag);
-
-	goals_bar_chart
-        .width(width)
-	    .height(height)
-	    .margins({top: 20, right: 50, bottom: 20, left: 40})
-	    .x(d3.scaleOrdinal().domain(teams_ordered))
-	    .xUnits(dc.units.ordinal)
-	    .barPadding(0.4)
-	    .dimension(y_dimension)
-	    .group(group)
-
-	return goals_bar_chart;
+function select_state(element) {
+    current_state = element.target
+    state_is_selected = current_state.options.fillColor == 'red'
+    state_is_selected ? current_state.setStyle(default_style) : current_state.setStyle(selected_style)
 }
-
 
 function standings_series_chart(html_tag, dataset, width=768, height=480){
 	let standing_line_chart = dc.seriesChart("#" + html_tag);
 
     let ndx, runDimension, runGroup;
 
-        d3.csv("data/" + dataset).then(function(experiments) {
+        d3.csv(dataset).then(function(experiments) {
 
             ndx = crossfilter(experiments);
             runDimension = ndx.dimension(function(d) {return [+d.clube_id, +d.rodada_id]; });
