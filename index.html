@@ -41,33 +41,13 @@
                     <div class="chart" id="goalsChart"></div>
                 </div>
             </div>
-            <div class="col-md-6 text-center bg-light">
-                <h3 class="left">Divisão dos gols marcados</h3>
-                <div class="chart" id="homeAwayChart"></div>
+            <div class="row">
+                <div class="col-md-6 text-center bg-light">
+                    <h3 class="left">Divisão dos gols marcados</h3>
+                    <div class="chart" id="homeAwayChart"></div>
+                </div>
             </div>
             <!-- Further charts should follow the pattern above -->
         </div>
-        <script type="text/javascript">
-            const VIEWPORT_WIDTH = document.getElementById('analysis-port').offsetWidth;
-            const VIEWPORT_HEIGHT = document.getElementById('analysis-port').offsetHeight;
-            const CENTRALIZED_COORDINATES = [-54, -14.8267];
-            const MAP_ZOOM = 4.4;
-
-            let br_states_data = 'data/br-states.json';
-            let standing_chart_dataset = 'data/position_by_round_team_id.csv';
-            let club_goals_dataset = "data/total_goals_per_team.csv";
-            let home_away_goals_dataset = "data/home_away_goals.csv"
-
-            map = create_map('map', CENTRALIZED_COORDINATES[1],
-                CENTRALIZED_COORDINATES[0], MAP_ZOOM);
-            superimpose_geojson(br_states_data, map);
-
-            standings_series_chart('standingsChart', standing_chart_dataset,
-                VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-            goals_bar_chart('goalsChart', club_goals_dataset, VIEWPORT_WIDTH,
-                VIEWPORT_HEIGHT);
-            home_away_pie_chart('homeAwayChart', home_away_goals_dataset, VIEWPORT_WIDTH,
-                VIEWPORT_HEIGHT);
-        </script>
     </body>
 </html>
