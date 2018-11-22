@@ -1,6 +1,8 @@
-function standings_series_chart(html_tag, dataset, width, height){
+function standings_series_chart(html_tag, dataset){
     let standing_line_chart = dc.seriesChart("#" + html_tag);
     let ndx, runDimension, runGroup;
+    let width = $('#' + html_tag).outerWidth();
+    let height = CHART_HEIGHT;
 
     d3.csv(dataset).then(function(experiments) {
         ndx = crossfilter(experiments);
@@ -34,8 +36,10 @@ function standings_series_chart(html_tag, dataset, width, height){
     });
 }
 
-function goals_bar_chart(html_tag, dataset, width, height){
+function goals_bar_chart(html_tag, dataset){
     let goals_bar_chart = dc.barChart('#' + html_tag);
+    let width = $('#' + html_tag).outerWidth();
+    let height = CHART_HEIGHT;
 
     d3.csv(dataset).then(function(data) {
         data.forEach(function(d){
