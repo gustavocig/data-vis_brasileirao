@@ -47,3 +47,18 @@ function select_state(element) {
     state_is_selected = current_state.options.fillColor == 'red'
     state_is_selected ? current_state.setStyle(STATE_DEFAULT_STYLE) : current_state.setStyle(STATE_SELECTED_STYLE)
 }
+
+function teste_para_leonel_mochila() {
+    console.log('xd')
+    let xd = d3.map();
+    let meu_pau = [
+        d3.csv('data/total_goals_per_team.csv'),
+        d3.csv('data/club_by_state.csv',  (d) => xd.set(d.id, d.estado_nome)),
+    ]
+    Promise.all(meu_pau).then(chico)
+}
+
+function chico([data]) {
+    console.log(data);
+    console.log(xd.get(data[0]["clube_id"]))
+}

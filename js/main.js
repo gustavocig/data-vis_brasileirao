@@ -21,6 +21,7 @@ const CHART_HEIGHT = 500;
 // Main execution when HTML DOM finishes loading
 $(main);
 
+let xd = d3.map();
 
 function main() {
     let map = create_map('map', CENTRALIZED_COORDINATES[1],
@@ -31,4 +32,16 @@ function main() {
     standings_series_chart('standingsChart', STANDING_CHART_DATA);
     goals_bar_chart('goalsChart', CLUB_GOALS_DATA);
     home_away_pie_chart('homeAwayChart', HOME_AWAY_GOALS_DATA);
+
+    
+    let meu_pau = [
+        d3.csv('data/total_goals_per_team.csv'),
+        d3.csv('data/club_by_state.csv',  (d) => xd.set(d.id, d.estado_nome)),
+    ]
+    Promise.all(meu_pau).then(chico)
+
+    function chico([data]) {
+        console.log(data);
+        console.log(xd.get(data[0]["clube_id"]))
+    }
 }
