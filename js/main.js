@@ -13,7 +13,9 @@ const MAP_ZOOM = 3.99;
 const BR_STATES_DATA = 'data/br-states.json';
 const STANDING_CHART_DATA = 'data/position_by_round_team_id.csv';
 const CLUB_GOALS_DATA = "data/total_goals_per_team.csv";
+const HOME_AWAY_GOALS_DATA = "data/home_away_goals.csv";
 const CHART_HEIGHT = 500;
+
 
 
 // Main execution when HTML DOM finishes loading
@@ -28,4 +30,5 @@ function main() {
 
     standings_series_chart('standingsChart', STANDING_CHART_DATA);
     goals_bar_chart('goalsChart', CLUB_GOALS_DATA);
+    home_away_pie_chart('homeAwayChart', HOME_AWAY_GOALS_DATA);
 }
