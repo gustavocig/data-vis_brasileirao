@@ -23,27 +23,11 @@ h2 span {
     position: relative;
 }
 
-#map, #analysis-port {
-    width: 47vw;
-    height: 92vh;
+.map-height {
+  height: 565px
 }
 
-.center {
-    margin: auto;
+.chart {
+  width: 100%;
 }
 
-.center-text {
-    text-align: center;
-}
-
-.left {
-    float: left;
-}
-
-.right {
-    float: right;
-}
-
-.top {
-    vertical-align: text-top;
-}
