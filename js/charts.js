@@ -1,4 +1,4 @@
-function standings_series_chart(html_tag, dataset){
+function standings_series_chart(html_tag, dataset) {
     let standing_line_chart = dc.seriesChart("#" + html_tag);
     let ndx, runDimension, runGroup;
     let width = $('#' + html_tag).outerWidth();
@@ -36,7 +36,7 @@ function standings_series_chart(html_tag, dataset){
     });
 }
 
-function goals_bar_chart(html_tag, dataset){
+function goals_bar_chart(html_tag, dataset) {
     let goals_bar_chart = dc.barChart('#' + html_tag);
     let width = $('#' + html_tag).outerWidth();
     let height = CHART_HEIGHT;
@@ -66,9 +66,10 @@ function goals_bar_chart(html_tag, dataset){
     });
 }
 
-function home_away_pie_chart(html_tag, dataset, width, height){
+function home_away_pie_chart(html_tag, dataset) {
 	let home_away_pie_chart = dc.pieChart('#' + html_tag);
-
+	let width = $('#' + html_tag).outerWidth();
+	let height = CHART_HEIGHT;
 	let goals_by_local = d3.map();
 
     d3.csv(dataset).then(function(data) {
