@@ -118,3 +118,41 @@ function goals_bar_chart(html_tag, dataset, width, height){
         goals_bar_chart.render();
     });
 }
+
+function home_away_pie_chart(html_tag, dataset, width, height){
+	let home_away_pie_chart = dc.pieChart('#' + html_tag);
+
+	let goals_by_local = d3.map();
+
+    d3.csv(dataset).then(function(data) {
+        data.forEach(function(d){
+            d.local = d.local
+            d.goals = d.gols
+        });
+
+        let facts = crossfilter(data);
+
+        let home_away_dimension = facts.dimension(d => "Como " + d.local);
+
+        let home_away_group = home_away_dimension.group().reduceSum(d => d.goals);
+
+        home_away_pie_chart
+          .width(width)
+          .height(height)
+          .slicesCap(2)
+          .innerRadius(100)
+          .externalLabels(50)
+          .externalRadiusPadding(50)
+          .drawPaths(true)
+          .dimension(home_away_dimension)
+          .group(home_away_group)
+          .on('pretransition', function(chart) {
+        	home_away_pie_chart.selectAll('text.pie-slice').text(function(d) {
+            return d.data.key + ' ' + dc.utils.printSingleValue((d.endAngle - d.startAngle) / (2*Math.PI) * 100) + '%';
+            })
+        });
+
+        home_away_pie_chart.render();
+        
+    });
+}
