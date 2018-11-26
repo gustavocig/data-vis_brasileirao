@@ -1,13 +1,26 @@
-function standings_series_chart(html_tag, dataset) {
+function standings_series_chart(html_tag, dataset, selected_clubs=null) {
     let standing_line_chart = dc.seriesChart("#" + html_tag);
     let ndx, runDimension, runGroup;
     let width = $('#' + html_tag).outerWidth();
     let height = CHART_HEIGHT;
 
+    let selected_clubs_is_set = typeof selected_clubs != 'undefined'
+                                && selected_clubs != null;
+
     d3.csv(dataset).then(function(experiments) {
         ndx = crossfilter(experiments);
-        runDimension = ndx.dimension(function(d) {return [+d.clube_id, +d.rodada_id]; });
+        runDimension = ndx.dimension(function(d) {
+            if(selected_clubs_is_set && selected_clubs.length > 0) {
+                if(selected_clubs.includes(+d.clube_id)) {
+                    return [+d.clube_id, +d.rodada_id];
+                } else {
+                    return [0, 0];
+                }   
+            }
+            return [+d.clube_id, +d.rodada_id];
+        });
         runGroup = runDimension.group().reduceSum(function(d) { return +d.posicao; });
+        runGroupFiltered = remove_empty_bins(runGroup);
 
         standing_line_chart
             .width(width)
@@ -36,10 +49,13 @@ function standings_series_chart(html_tag, dataset) {
     });
 }
 
-function goals_bar_chart(html_tag, dataset) {
+function goals_bar_chart(html_tag, dataset, selected_clubs=null) {
     let goals_bar_chart = dc.barChart('#' + html_tag);
     let width = $('#' + html_tag).outerWidth();
     let height = CHART_HEIGHT;
+
+    let selected_clubs_is_set = typeof selected_clubs != 'undefined'
+                                && selected_clubs != null;
 
     d3.csv(dataset).then(function(data) {
         data.forEach(function(d){
@@ -48,19 +64,31 @@ function goals_bar_chart(html_tag, dataset) {
         });
 
         let facts = crossfilter(data);
-        let teamDimension = facts.dimension(d => d.team);
+
+        let teamDimension = facts.dimension(d => {
+            if(selected_clubs_is_set && selected_clubs.length > 0) {
+                if(selected_clubs.includes(d.team)) {
+                    return d.team;
+                } else {
+                    return 0;
+                }   
+            }
+            return d.team;
+        });
+
         let teamGroup = teamDimension.group().reduceSum(d => d.goals);
-        let teamOrdered = teamGroup.top(Infinity).map(d => d.key);
+        let teamGroupFiltered = remove_empty_bins(teamGroup);
 
         goals_bar_chart
             .width(width)
             .height(height)
             .margins({top: 20, right: 50, bottom: 20, left: 40})
-            .x(d3.scaleOrdinal().domain(teamOrdered))
+            .x(d3.scaleOrdinal())
             .xUnits(dc.units.ordinal)
             .barPadding(0.4)
             .dimension(teamDimension)
-            .group(teamGroup)
+            .group(teamGroupFiltered)
+            .ordering(d => -d.value)
 
         goals_bar_chart.render();
     });
@@ -103,4 +131,15 @@ function home_away_pie_chart(html_tag, dataset) {
         home_away_pie_chart.render();
         
     });
+}
+
+function remove_empty_bins(source_group) {
+    return {
+        all:function () {
+            return source_group.all().filter(function(d) {
+                console.log(d);
+                return d.key != 0; // if integers only
+            });
+        }
+    };
 }
