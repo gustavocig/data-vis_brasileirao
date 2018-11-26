@@ -58,7 +58,6 @@ function select_state(element) {
     selected_club_ids = match_state_to_id(selected_states);
     goals_bar_chart('goalsChart', CLUB_GOALS_DATA, selected_club_ids);
     standings_series_chart('standingsChart', STANDING_CHART_DATA, selected_club_ids);
-
 }
 
 function match_state_to_id(states) {
