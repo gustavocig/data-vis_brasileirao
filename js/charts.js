@@ -25,11 +25,11 @@ function standings_series_chart(html_tag, dataset, selected_clubs=null) {
         standing_line_chart
             .width(width)
             .height(height)
-            .chart(function(c) { return dc.lineChart(c).curve(d3.curveCardinal); })
+            .chart(function(c) { return dc.lineChart(c).curve(d3.curveLinear); })
             .x(d3.scaleLinear().domain([1,20]))
             .y(d3.scaleLinear().range([20,1]))
             .brushOn(false)
-            .yAxisLabel("Posicao")
+            .yAxisLabel("Posição")
             .xAxisLabel("Rodada")
             .clipPadding(10)
             .elasticY(true)
