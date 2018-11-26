@@ -1,6 +1,8 @@
+let selected_states = [];
+
 function create_map(html_tag, lat, long, magnification, options) {
     let options_is_set = typeof options != 'undefined'
-                        && options != null
+                        && options != null;
     // If options object isnt set, uses default config
     options = options_is_set ? options : {
         minZoom:            magnification,
@@ -44,6 +46,29 @@ function onEachFeature(feature, layer) {
 
 function select_state(element) {
     current_state = element.target
+    current_state_id = current_state.feature.id;
     state_is_selected = current_state.options.fillColor == 'red'
-    state_is_selected ? current_state.setStyle(STATE_DEFAULT_STYLE) : current_state.setStyle(STATE_SELECTED_STYLE)
+    if (state_is_selected) {
+        selected_states = selected_states.filter(state => state !== current_state_id);
+        current_state.setStyle(STATE_DEFAULT_STYLE);
+    } else {
+        selected_states.push(current_state_id);
+        current_state.setStyle(STATE_SELECTED_STYLE);
+    }
+    selected_club_ids = match_state_to_id(selected_states);
+    //goals_bar_chart('goalsChart', CLUB_GOALS_DATA, selected_club_ids);
+    standings_series_chart('standingsChart', STANDING_CHART_DATA, selected_club_ids);
+
+}
+
+function match_state_to_id(states) {
+    let club_ids = [];
+    d3.csv('data/club_by_state.csv').then(function(clubs) {
+        clubs.forEach(function(club) {
+            if(states.includes(club.estado_id)) {
+                club_ids.push(+club.id)
+            }
+        });
+    });
+    return club_ids;
 }
