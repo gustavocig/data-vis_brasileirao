@@ -27,7 +27,7 @@ function standings_series_chart(html_tag, dataset, selected_clubs=null) {
             .height(height)
             .chart(function(c) { return dc.lineChart(c).curve(d3.curveLinear); })
             .x(d3.scaleLinear().domain([1,20]))
-            .y(d3.scaleLinear().range([20,1]))
+            .y(d3.scaleLinear().range([4,1]))
             .brushOn(false)
             .yAxisLabel("Posição")
             .xAxisLabel("Rodada")
@@ -38,9 +38,8 @@ function standings_series_chart(html_tag, dataset, selected_clubs=null) {
             .mouseZoomable(true)
             .seriesAccessor(function(d) {return "Expt: " + d.key[0];})
             .keyAccessor(function(d) {return +d.key[1];})
-            .valueAccessor(function(d) {return +d.value;});
-            //.legend(dc.legend().x(350).y(350).itemHeight(13).gap(5).horizontal(1).legendWidth(140).itemWidth(70))
-            //standing_line_chart.yAxis().tickFormat(function(d) {return d3.format(',d')(d+299500);});
+            .valueAccessor(function(d) {return +d.value;})
+            .legend(dc.legend().x(0).y(0).itemHeight(13).gap(5).horizontal(1).legendWidth(140).itemWidth(70));
 
         standing_line_chart.margins().left += 40;
         standing_line_chart.ordering(function(d) { return -d.value; });
