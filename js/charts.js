@@ -49,6 +49,8 @@ function standings_series_chart(html_tag, dataset, selected_clubs=null) {
 }
 
 function goals_bar_chart(html_tag, dataset, selected_clubs=null) {
+    let nameById_map = d3.map();
+    d3.csv(TEAMS_DATA, function(d){return nameById_map.set(d.id, d.abreviacao)});
     let goals_bar_chart = dc.barChart('#' + html_tag);
     let width = $('#' + html_tag).outerWidth();
     let height = CHART_HEIGHT;
@@ -72,7 +74,7 @@ function goals_bar_chart(html_tag, dataset, selected_clubs=null) {
                     return 0;
                 }   
             }
-            return d.team;
+            return nameById_map.get(d.team);
         });
 
         let teamGroup = teamDimension.group().reduceSum(d => d.goals);
