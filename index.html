@@ -26,10 +26,33 @@
     <body>
         <header class="container">
             <div class="row">
-                <h5 class='text-center col-md-12 center'>Análise do Campeonato Brasileiro</h5>
+                <h2 class='text-center col-md-12 center'>Análise do Campeonato Brasileiro</h2>
             </div>
         </header>
-        <div id='map' class='container map-height'></div>
+        <div class="row">
+        <div class='col-md-1'></div>
+            <div class="col-md-8">
+                <div id='map' class='container map-height'></div>
+            </div>
+            <div class="col-md-2">
+                <h5 class="text-center center">Seleção por região</h5>
+                <div class='buttonBlock'>
+                    <button type='button' class="btn btn-primary commonButton btn-block" onClick="select_states_per_region(NORTE_STATES);">Norte</button>
+                </div>
+                <div class='buttonBlock'>
+                    <button type='button' class="btn btn-primary commonButton btn-block" onClick="select_states_per_region(NORDESTE_STATES);">Nordeste</button>
+                </div>
+                <div class='buttonBlock'>
+                    <button type='button' class="btn btn-primary commonButton btn-block" onClick="select_states_per_region(CENTRO_OESTE_STATES);">Centro-Oeste</button>
+                </div>
+                <div class='buttonBlock'>
+                    <button type='button' class="btn btn-primary commonButton btn-block" onClick="select_states_per_region(SUDESTE_STATES);">Sudeste</button>
+                </div>
+                <div class='buttonBlock'>
+                    <button type='button' class="btn btn-primary commonButton btn-block" onClick="select_states_per_region(SUL_STATES);">Sul</button>
+                </div>
+            </div>
+        </div>
         <div id='analysis-port' class='container'>
             <div class="row row-chart">
                 <div class="col-md-12 text-center bg-light">
