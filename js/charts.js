@@ -137,7 +137,6 @@ function remove_empty_bins(source_group) {
     return {
         all:function () {
             return source_group.all().filter(function(d) {
-                console.log(d);
                 return d.key != 0; // if integers only
             });
         }
