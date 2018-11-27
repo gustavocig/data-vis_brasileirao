@@ -71,7 +71,7 @@ function goals_bar_chart(html_tag, dataset, selected_clubs=null) {
         let teamDimension = facts.dimension(d => {
             if(selected_clubs_is_set && selected_clubs.length > 0) {
                 if(selected_clubs.includes(d.team)) {
-                    nameById_map.get(d.team);
+                    return nameById_map.get(d.team);
                 } else {
                     return 0;
                 }   
@@ -97,23 +97,35 @@ function goals_bar_chart(html_tag, dataset, selected_clubs=null) {
     });
 }
 
-function home_away_pie_chart(html_tag, dataset) {
+function home_away_pie_chart(html_tag, dataset, selected_clubs=null) {
+    let selected_clubs_is_set = typeof selected_clubs != 'undefined'
+                                && selected_clubs != null;
 	let home_away_pie_chart = dc.pieChart('#' + html_tag);
 	let width = $('#' + html_tag).outerWidth();
 	let height = CHART_HEIGHT;
-	let goals_by_local = d3.map();
 
     d3.csv(dataset).then(function(data) {
         data.forEach(function(d){
-            d.local = d.local
-            d.goals = d.gols
+            d.local = d.local;
+            d.goals = +d.gols;
+            d.team = +d.clube_id;
         });
 
         let facts = crossfilter(data);
 
         let home_away_dimension = facts.dimension(d => "Como " + d.local);
 
-        let home_away_group = home_away_dimension.group().reduceSum(d => d.goals);
+        let home_away_group = home_away_dimension.group().reduceSum(d => {
+            if(selected_clubs_is_set && selected_clubs.length > 0) {
+                console.log(selected_clubs);
+                if(selected_clubs.includes(d.team)) {
+                    return d.goals;
+                } else {
+                    return 0;
+                }   
+            }
+            return d.goals;
+        });
 
         home_away_pie_chart
           .width(width)

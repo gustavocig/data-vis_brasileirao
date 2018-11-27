@@ -105,6 +105,7 @@ function match_state_to_id(states) {
 function redraw_charts(selected_club_ids) {
     goals_bar_chart('goalsChart', CLUB_GOALS_DATA, selected_club_ids);
     standings_series_chart('standingsChart', STANDING_CHART_DATA, selected_club_ids);
+    home_away_pie_chart('homeAwayChart', HOME_AWAY_GOALS_DATA, selected_club_ids);
 }
 
 function select_states_per_region(state_ids) {
