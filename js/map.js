@@ -108,13 +108,21 @@ function redraw_charts(selected_club_ids) {
 }
 
 function select_states_per_region(state_ids) {
+    let flag_turning_off;
     Object.entries(map_layer._layers).forEach(function([key, layer]) {
         if(state_ids.includes(layer.feature.id)) {
             if(layer.options.fillColor == STATE_SELECTED_STYLE.fillColor) {
                 layer.setStyle(STATE_DEFAULT_STYLE);
+                flag_turning_off = true;
             } else {
                 layer.setStyle(STATE_SELECTED_STYLE);
+                flag_turning_off = false;
             }
         }
     });
+    if(flag_turning_off) {
+        state_ids = [];
+    }
+    selected_club_ids = match_state_to_id(state_ids);
+    redraw_charts(selected_club_ids);
 }
