@@ -20,6 +20,7 @@ const SUL_STATES = ['PR', 'SC', 'RS'];
 
 let selected_states = [];
 let map_layer;
+let club_by_state = club_name_by_state();
 
 function create_map(html_tag, lat, long, magnification, options) {
     let options_is_set = typeof options != 'undefined'
@@ -54,9 +55,11 @@ function superimpose_geojson(dataset, map) {
 
 function onEachFeature(feature, layer) {
     if (feature.properties && feature.properties.nome) {
-        layer.bindPopup(feature.properties.nome, {
-            closeButton: false, offset: L.point(0, -20)
-        });
+        let popup = new L.Popup();
+        console.log(club_by_state);
+        let popupContent = "<strong>" + feature.properties.nome + "</strong></br>" + return_clubs_as_string(club_by_state, feature.properties.nome);
+        popup.setContent(popupContent);
+        layer.bindPopup(popup);
         layer.on({
             mouseover: function(el) {
                 layer.openPopup();
@@ -126,4 +129,29 @@ function select_states_per_region(state_ids) {
     }
     selected_club_ids = match_state_to_id(state_ids);
     redraw_charts(selected_club_ids);
+}
+
+function club_name_by_state() {
+    let club_state_relation = new Object();
+    d3.csv('data/club_by_state.csv').then(function(data) {
+        data.forEach(function(row) {
+            if(typeof club_state_relation[row.estado_nome] == 'undefined') {
+                club_state_relation[row.estado_nome] = [row.nome];
+            } else {
+                club_state_relation[row.estado_nome].push(row.nome);
+            }
+        });
+    });
+    return club_state_relation;
+}
+
+function return_clubs_as_string(club_state_object, state) {
+    let result_string = '';
+    if(typeof club_state_object[state] == 'undefined') {
+        return result_string;
+    }
+    club_state_object[state].forEach(function(club) {
+        result_string += '<li>' + club + '</li>'
+    });
+    return result_string;
 }
