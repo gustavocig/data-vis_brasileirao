@@ -55,7 +55,7 @@ function superimpose_geojson(dataset, map) {
 
 function onEachFeature(feature, layer) {
     if (feature.properties && feature.properties.nome) {
-        let popup = new L.Popup();
+        let popup = new L.Popup({closeButton: false, offset: L.point(0, -20)});
         console.log(club_by_state);
         let popupContent = "<strong>" + feature.properties.nome + "</strong></br>" + return_clubs_as_string(club_by_state, feature.properties.nome);
         popup.setContent(popupContent);
