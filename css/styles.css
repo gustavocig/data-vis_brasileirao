@@ -38,3 +38,11 @@ h2 span {
 .buttonBlock {
   padding: 10px 0px 10px 0px;
 }
+
+.main {
+  margin-top: 70px;
+}
+
+.main-bar {
+  background-color: #51527b;
+}
