@@ -15,7 +15,7 @@ $(main);
 function main() {
     let map = create_map('map', CENTRALIZED_COORDINATES[1],
                 CENTRALIZED_COORDINATES[0], MAP_ZOOM);
-    let club_by_state = club_name_by_state();
+
     superimpose_geojson(BR_STATES_DATA, map);
     standings_series_chart('standingsChart', STANDING_CHART_DATA);
     goals_bar_chart('goalsChart', CLUB_GOALS_DATA);
